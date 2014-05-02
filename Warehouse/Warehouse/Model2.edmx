@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WarehouseModel1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="WarehouseModel1StoreContainer">
+          <EntitySet Name="item" EntityType="WarehouseModel1.Store.item" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="log" EntityType="WarehouseModel1.Store.log" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="reason" EntityType="WarehouseModel1.Store.reason" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="warehouse" EntityType="WarehouseModel1.Store.warehouse" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_log1_item" Association="WarehouseModel1.Store.FK_log1_item">
+            <End Role="item" EntitySet="item" />
+            <End Role="log" EntitySet="log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehouse_itemID" Association="WarehouseModel1.Store.FK_warehouse_itemID">
+            <End Role="item" EntitySet="item" />
+            <End Role="warehouse" EntitySet="warehouse" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="itemName" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="historyID" />
+          </Key>
+          <Property Name="historyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="itemID" Type="int" Nullable="false" />
+          <Property Name="total" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="invoicenumber" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="reason">
+          <Key>
+            <PropertyRef Name="reasonID" />
+          </Key>
+          <Property Name="reasonID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="warehouse">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="int" Nullable="false" />
+          <Property Name="totalstock" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_log1_item">
+          <End Role="item" Type="WarehouseModel1.Store.item" Multiplicity="1" />
+          <End Role="log" Type="WarehouseModel1.Store.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="itemID" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="itemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehouse_itemID">
+          <End Role="item" Type="WarehouseModel1.Store.item" Multiplicity="1" />
+          <End Role="warehouse" Type="WarehouseModel1.Store.warehouse" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="itemID" />
+            </Principal>
+            <Dependent Role="warehouse">
+              <PropertyRef Name="itemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WarehouseModel1" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="WarehouseEntities1" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="items" EntityType="WarehouseModel1.item" />
+          <EntitySet Name="logs" EntityType="WarehouseModel1.log" />
+          <EntitySet Name="reasons" EntityType="WarehouseModel1.reason" />
+          <EntitySet Name="warehouses" EntityType="WarehouseModel1.warehouse" />
+          <AssociationSet Name="FK_log_itemID" Association="WarehouseModel1.FK_log_itemID">
+            <End Role="item" EntitySet="items" />
+            <End Role="log" EntitySet="logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehouse_itemID" Association="WarehouseModel1.FK_warehouse_itemID">
+            <End Role="item" EntitySet="items" />
+            <End Role="warehouse" EntitySet="warehouses" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="itemName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="logs" Relationship="WarehouseModel1.FK_log_itemID" FromRole="item" ToRole="log" />
+          <NavigationProperty Name="warehouse" Relationship="WarehouseModel1.FK_warehouse_itemID" FromRole="item" ToRole="warehouse" />
+        </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="historyID" />
+          </Key>
+          <Property Name="historyID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="itemID" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="item" Relationship="WarehouseModel1.FK_log_itemID" FromRole="log" ToRole="item" />
+          <Property Type="DateTime" Name="date" Nullable="false" Precision="0" />
+          <Property Type="String" Name="invoicenumber" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="reason">
+          <Key>
+            <PropertyRef Name="reasonID" />
+          </Key>
+          <Property Name="reasonID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="warehouse">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="Int32" Nullable="false" />
+          <Property Name="totalstock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="item" Relationship="WarehouseModel1.FK_warehouse_itemID" FromRole="warehouse" ToRole="item" />
+        </EntityType>
+        <Association Name="FK_log_itemID">
+          <End Role="item" Type="WarehouseModel1.item" Multiplicity="1" />
+          <End Role="log" Type="WarehouseModel1.log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="itemID" />
+            </Principal>
+            <Dependent Role="log">
+              <PropertyRef Name="itemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehouse_itemID">
+          <End Role="item" Type="WarehouseModel1.item" Multiplicity="1" />
+          <End Role="warehouse" Type="WarehouseModel1.warehouse" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="itemID" />
+            </Principal>
+            <Dependent Role="warehouse">
+              <PropertyRef Name="itemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WarehouseModel1StoreContainer" CdmEntityContainer="WarehouseEntities1">
+          <EntitySetMapping Name="items">
+            <EntityTypeMapping TypeName="WarehouseModel1.item">
+              <MappingFragment StoreEntitySet="item">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="logs">
+            <EntityTypeMapping TypeName="WarehouseModel1.log">
+              <MappingFragment StoreEntitySet="log">
+                <ScalarProperty Name="invoicenumber" ColumnName="invoicenumber" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="historyID" ColumnName="historyID" />
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reasons">
+            <EntityTypeMapping TypeName="WarehouseModel1.reason">
+              <MappingFragment StoreEntitySet="reason">
+                <ScalarProperty Name="reasonID" ColumnName="reasonID" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="warehouses">
+            <EntityTypeMapping TypeName="WarehouseModel1.warehouse">
+              <MappingFragment StoreEntitySet="warehouse">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="totalstock" ColumnName="totalstock" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

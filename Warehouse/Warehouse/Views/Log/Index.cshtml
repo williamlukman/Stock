@@ -1,0 +1,30 @@
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<a href="/">Link to Home Page</a> <br /> | <a href="/item">Link to Daftar Barang</a>
+<br />
+<div id="warehouseapp" class="k-content" role="application">
+    <div id="add-transaction">
+        <h2>New Transaction</h2>
+    </div>
+    <div id="options">
+        <h3>Nama Barang:</h3>
+        <input id="itemName" placeholder="Select Item..." />
+
+        <h3>Tipe Transaksi:</h3>
+        <input id="selectanyreasons" placeholder="Select Transaction Type..." />
+
+        <h3>Tanggal:</h3>
+        <input id="datepicker" value="@DateTime.Today" style="width:150px;" />
+
+        <h3>Jumlah:</h3>
+        <input id="total" type="text" />
+
+        <button class="k-button" id="buttonSaveTransaction">Save</button>
+    </div>
+</div>
+
+<script type="text/javascript" src="@Url.Content("~/scripts/warehouse/transaction.js")"> </script>

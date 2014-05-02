@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Warehouse Item Page";
+}
+
+    <a href="/">Link to Home Page</a> | <a href="/log">Link to Transaction Page</a><br />
+    <br />
+    <div id="item_panel">
+        <table id="list_item" class="scroll list_master" cellpadding="0" cellspacing="0"></table>
+        <div id="pager_item" class="scroll" style="text-align: center;"></div>
+    </div>
+
+    <div id="itemapp" class="k-content" role="application">
+        <div id="add-item">
+            <h2>New Item</h2>
+        </div>
+        <div id="options">
+            <h3>Nama Barang:</h3>
+            <input id="itemName" />
+
+            <button class="k-button" id="buttonSaveItem">Save</button>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="@Url.Content("~/scripts/warehouse/item.js")"></script>
